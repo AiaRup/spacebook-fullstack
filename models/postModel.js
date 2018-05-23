@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-//design the two schema below and use sub docs 
+//design the two schema below and use sub docs
 //to define the relationship between posts and comments
 
 
@@ -13,6 +13,6 @@ let postSchema = new mongoose.Schema({
 
 });
 
-let Post = mongoose.model('post', postSchema)
+let Post = mongoose.model('post', postSchema);
 
-module.exports = Post
+module.exports = Post;

@@ -2,11 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-const SERVER_PORT = 8080;
-
-mongoose.connect('mongodb://localhost/spacebookDB', function() {
-  console.log("DB connection established!!!");
-})
+// connect to DB and check the connection
+mongoose.connect('mongodb://localhost/spacebookDB')
+  .then(() => {console.log('Successfully connected to mongoDB');})
+  .catch((error) => console.error(error));
 
 var Post = require('./models/postModel');
 
@@ -26,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // 4) to handle adding a comment to a post
 // 5) to handle deleting a comment from a post
 
-app.listen(SERVER_PORT, () => {
-  console.log("Server started on port " + SERVER_PORT);
-});
+
+
+//PORT
+const SERVER_PORT = process.env.PORT || 8080;
+app.listen(SERVER_PORT, () => console.log(`Server up and running on port ${SERVER_PORT}...`));
