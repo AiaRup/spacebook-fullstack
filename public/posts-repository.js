@@ -6,8 +6,8 @@ class PostsRepository {
     this.posts = [];
   }
 
-  addPost(postText) {
-    this.posts.push({ text: postText, comments: [] });
+  addPost(postText, postID) {
+    this.posts.push({ text: postText, comments: [], _id: postID });
   }
 
   removePost(index) {
