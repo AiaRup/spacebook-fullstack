@@ -12,7 +12,7 @@ class EventsHandler {
         alert('Please enter text!');
       } else {
         this.postsRepository.addPost($input.val());
-        this.postsRenderer.renderPosts(this.postsRepository.posts);
+        // this.postsRenderer.renderPosts(this.postsRepository.posts);
         $input.val('');
       }
     });
