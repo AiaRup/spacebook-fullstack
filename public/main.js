@@ -18,14 +18,16 @@ const SpacebookApp = function() {
   let getAllPosts = function() {
     $.ajax({
       method: 'Get',
-      url: '/posts',
+      url: 'posts',
       success: function(posts) {
-        console.log(posts);
+        postsRepository.posts = [];
         // add the posts and comments to the array
         for (var i = 0; i < posts.length; i++) {
-          postsRepository.addPost(posts[i].text, posts[i]._id);
+          postsRepository.posts.push({ text: posts[i].text, comments: [], _id: posts[i]._id });
           for (const comment of posts[i].comments) {
-            postsRepository.addComment(comment, i);
+            postsRepository.posts[i].comments.push(comment);
+            console.log(comment);
+
           }
         }
         // render all posts and comments on the page

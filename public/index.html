@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <title>Spacebook</title>
@@ -10,24 +12,28 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-sm-4">
                 <div class="page-header">
                     <h1>Spacebook</h1>
                 </div>
-                <div class="posts"></div>
                 <form class="post-form">
                     <h3>Add a New Post</h3>
                     <div class="form-group">
-                        <input class="form-control" type="text" id="postText" placeholder="Enter Post Text"/>
+                        <input class="form-control" type="text" id="postText" placeholder="Enter Post Text" />
                     </div>
                     <button type="button" id="addpost" class="btn btn-primary">Post</button>
                 </form>
             </div>
+            <div class="col-sm-7 col-sm-offset-1">
+                <div class="posts"></div>
+            </div>
         </div>
     </div>
     <script id="post-template" type="text/x-handlebars-template">
-        <div class="post" data-id="{{_id}}"> {{text}} <a class="toggle-comments" href="#"> Comments </a>
-            <button type="button" class="btn btn-danger remove-post">Remove Post</button>
+        <div class="post" data-id="{{_id}}"> {{text}}
+            <a class="toggle-comments" href="#"> Comments </a>
+            <i class="fas fa-trash-alt remove-post"></i>
+            <!-- <button type="button" class="btn btn-danger remove-post">Remove Post</button> -->
             <!-- <div>111</div> -->
             <div class="comments-container">
                 <ul class="comments-list"></ul>
@@ -39,7 +45,8 @@
     </script>
     <script id="comment-template" type="text/x-handlebars-template">
         <li class="comment" data-id="{{_id}}">{{text}} - {{user}}
-            <button type="button" class="btn btn-sm btn-danger remove-comment">Remove Comment</button>
+                <i class="fas fa-trash-alt remove-comment"></i>
+            <!-- <button type="button" class="btn btn-sm btn-danger remove-comment">Remove Comment</button> -->
         </li>
     </script>
     <script src="jquery/dist/jquery.js"></script>

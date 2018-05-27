@@ -12,7 +12,7 @@ class EventsHandler {
         alert('Please enter text!');
       } else {
         this.postsRepository.addPost($input.val());
-        this.postsRenderer.renderPosts(this.postsRepository.posts);
+        // this.postsRenderer.renderPosts(this.postsRepository.posts);
         $input.val('');
       }
     });
@@ -48,7 +48,7 @@ class EventsHandler {
       let newComment = { text: $comment.val(), user: $user.val() };
 
       this.postsRepository.addComment(newComment, postIndex);
-      this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+      // this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
       $comment.val('');
       $user.val('');
     });
@@ -61,7 +61,7 @@ class EventsHandler {
       let postIndex = $(event.currentTarget).closest('.post').index();
       let commentIndex = $(event.currentTarget).closest('.comment').index();
       this.postsRepository.deleteComment(postIndex, commentIndex);
-      this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+      // this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
     });
   }
 }

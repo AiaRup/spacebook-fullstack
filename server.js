@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var ObjectID = require('mongodb').ObjectID;
+mongoose.Promise = global.Promise;
+
 
 // connect to DB and check the connection
 mongoose.connect('mongodb://localhost/spacebookDB', { useMongoClient: true })
@@ -15,80 +18,71 @@ app.use(express.static('node_modules'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// create some data to start with
-// Post.create({
-//   text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis, dolor, atque similique odit amet beatae consequuntur eius neque sunt non est, ea in laboriosam. Voluptatum dolore quia molestias incidunt voluptate?',
-//   comments: [{
-//     user: 'Joe',
-//     text: 'beatae consequuntur eius neque sunt non est, ea in laboriosam.'
-//   },
-//   {
-//     user: 'Hila',
-//     text: 'neque sunt non est, ea in laboriosam. Voluptatum dolore quia molestias'
-//   }]
-// }, function(err, postData) {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log(postData);
-// });
-
-
-// Post.create({
-//   text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto delectus cupiditate doloremque numquam ab quibusdam ullam quis ducimus aperiam soluta. Distinctio, architecto. Incidunt dolores illo temporibus fuga esse ea minus!Et veniam autem reiciendis. Atque officiis labore illo vitae totam',
-//   comments: [{
-//     user: 'Laly',
-//     text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto delectus cupiditate'
-//   },
-//   {
-//     user: 'Tina',
-//     text: 'Distinctio, architecto. Incidunt dolores illo temporibus fuga esse ea minus!Et veniam autem reiciendis.'
-//   },
-//   {
-//     user: 'zoe',
-//     text: 'quam necessitatibus tempore aut sequi hic incidunt aliquid, numquam dolorem ex?'
-//   }]
-// }, function(err, postData) {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log(postData);
-// });
-
-
-// var aPost = new Post({ text: 'My first post!!!', comments: [] });
-
-// aPost.comments.push({ user: 'Bob', text: 'Great Post!' });
-
-// aPost.save(function(err, data) {
-//   if (err) {
-//     console.error(err);
-//   } else {
-//     console.error(data);
-//   }
-// });
-
-
 // You will need to create 5 server routes
 // These will define your API:
 
 // 1) to handle getting all posts and their comments
 app.get('/posts', (req, res) => {
-  // Post.find({}).populate('comments').exec((err, postResult) => {
-  //   if (err) throw err;
-  //   console.log(postResult);
-  // });
   Post.find({}, (err, postResult) => {
     if (err) throw err;
-    console.log(postResult);
     res.send(postResult);
   });
 });
-// 2) to handle adding a post
-// 3) to handle deleting a post
-// 4) to handle adding a comment to a post
-// 5) to handle deleting a comment from a post
 
+// 2) to handle adding a post
+app.post('/posts', (req, res) => {
+  Post.create({
+    text: req.body.text,
+    comments: []
+  }, (err, postResult) => {
+    if (err) throw err;
+    res.send(postResult);
+  });
+});
+
+// 3) to handle deleting a post
+app.delete('/posts/:id', (req, res) => {
+  var id = req.params.id;
+  // Check if the ID is a valid mongoose id
+  if (!ObjectID.isValid(id)) {
+    return res.status(400).send('Id not in the correct format');
+  }
+  // delete the post from the DB collection
+  Post.findByIdAndRemove(id, (err, deletedPost) => {
+    if (err) throw err;
+    res.json(deletedPost);
+  });
+});
+
+// 4) to handle adding a comment to a post
+app.post('/posts/:id/comments', (req, res) => {
+  var id = req.params.id;
+  // Check if the ID is a valid mongoose id
+  if (!ObjectID.isValid(id)) {
+    return res.status(400).send('Id not in the correct format');
+  }
+  // update the comments array in the DB
+  Post.findByIdAndUpdate(id, { $push: { comments: req.body } }, { new: true }, (err, updatedPost) => {
+    if (err) throw err;
+    res.send(updatedPost);
+  });
+});
+
+// 5) to handle deleting a comment from a post
+app.delete('/posts/:postId/comments/:commentId', (req, res) => {
+  let postId = req.params.postId;
+  let commentId = req.params.commentId;
+  // Check if the ID is a valid mongoose id
+  if (!ObjectID.isValid(postId) && !ObjectID.isValid(commentId)) {
+    return res.status(400).send('Id not in the correct format');
+  }
+  // delete the comment from the DB collection
+  Post.findByIdAndUpdate(postId, { $pull: { comments: { _id: commentId } } }, { new: true }, (err, updatedPost) => {
+    if (err) throw err;
+    console.log(updatedPost);
+    res.json(updatedPost);
+  });
+});
 
 
 //PORT
