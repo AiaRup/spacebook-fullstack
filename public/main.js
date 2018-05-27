@@ -25,7 +25,9 @@ const SpacebookApp = function() {
         for (var i = 0; i < posts.length; i++) {
           postsRepository.posts.push({ text: posts[i].text, comments: [], _id: posts[i]._id });
           for (const comment of posts[i].comments) {
-            postsRepository.addComment(comment, i);
+            postsRepository.posts[i].comments.push(comment);
+            console.log(comment);
+
           }
         }
         // render all posts and comments on the page
