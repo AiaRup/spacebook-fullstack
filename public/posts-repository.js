@@ -1,26 +1,26 @@
 /**
      * @class Responsible for storing and manipulating Spacebook posts, in-memory
      */
-
-import PostsRenderer from './posts-renderer.js';
-let postsRenderer = new PostsRenderer();
-
 class PostsRepository {
   constructor() {
     this.posts = [];
   }
 
-  addPost(postText) {
-    $.ajax({
+  addPost(postText, postTitle, postUser) {
+    let postTime = new Date();
+    postTime = postTime.toLocaleTimeString().substring(0, 5) + ' on ' + postTime.toLocaleDateString().replace(/\./g, '/');
+    return $.ajax({
       method: 'POST',
       url: 'posts',
       data: {
-        text: postText
+        title: postTitle,
+        text: postText,
+        username: postUser,
+        time: postTime
       },
       dataType: 'json',
       success: (newPost) => {
-        this.posts.push({ text: newPost.text, comments: [], _id: newPost._id });
-        postsRenderer.renderPosts(this.posts);
+        this.posts.push(newPost);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -30,13 +30,12 @@ class PostsRepository {
 
   removePost(index) {
     let postId = this.posts[index]._id;
-    $.ajax({
+    return $.ajax({
       method: 'DELETE',
       url: `posts/${postId}`,
       success: () => {
         this.posts.splice(index, 1);
         console.log('post deleted from array');
-        postsRenderer.renderPosts(this.posts);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -46,15 +45,13 @@ class PostsRepository {
 
   addComment(newComment, postIndex) {
     let postId = this.posts[postIndex]._id;
-    $.ajax({
+    return $.ajax({
       method: 'POST',
       url: `posts/${postId}/comments`,
       data: newComment,
       dataType: 'json',
       success: (updatedPost) => {
-        console.log(updatedPost);
         this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length-1]);
-        postsRenderer.renderComments(this.posts, postIndex);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -66,13 +63,11 @@ class PostsRepository {
   deleteComment(postIndex, commentIndex) {
     let postId = this.posts[postIndex]._id;
     let commentId = this.posts[postIndex].comments[commentIndex]._id;
-    $.ajax({
+    return $.ajax({
       method: 'DELETE',
       url: `posts/${postId}/comments/${commentId}`,
       success: () => {
         this.posts[postIndex].comments.splice(commentIndex, 1);
-        console.log('comment deleted from array');
-        postsRenderer.renderComments(this.posts, postIndex);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);

@@ -11,39 +11,25 @@ eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
+eventsHandler.registerUpdatePost();
+eventsHandler.registerCancelUpdates();
 
-
-const SpacebookApp = function() {
-  // request all the posts from the DB
-  let getAllPosts = function() {
-    $.ajax({
-      method: 'Get',
-      url: 'posts',
-      success: function(posts) {
-        postsRepository.posts = [];
-        // add the posts and comments to the array
-        for (var i = 0; i < posts.length; i++) {
-          postsRepository.posts.push({ text: posts[i].text, comments: [], _id: posts[i]._id });
-          for (const comment of posts[i].comments) {
-            postsRepository.posts[i].comments.push(comment);
-            console.log(comment);
-
-          }
-        }
-        // render all posts and comments on the page
-        postsRenderer.renderPosts(postsRepository.posts);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-      }
-    });
-  };
-  // Get all posts as soon as the page loads
-  getAllPosts();
-
-  return {
-    getAllPosts
-  };
+// request all the posts from the DB
+let getAllPosts = function() {
+  $.ajax({
+    method: 'Get',
+    url: 'posts',
+    success: function(posts) {
+      // add the posts and comments to the array
+      postsRepository.posts = posts;
+      // render all posts and comments on the page
+      postsRenderer.renderPosts(postsRepository.posts);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(textStatus);
+    }
+  });
 };
+  // Get all posts as soon as the page loads
+getAllPosts();
 
-let app = SpacebookApp();
