@@ -11,30 +11,46 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
+        <div class="row justify-content-between">
+            <div class="col-md-4">
                 <div class="page-header">
                     <h1>Spacebook</h1>
                 </div>
                 <form class="post-form">
                     <h3>Add a New Post</h3>
                     <div class="form-group">
+                        <input class="form-control" type="text" id="postUser" placeholder="Username" />
+                        <input class="form-control" type="text" id="postTitle" placeholder="Enter Post Title" />
                         <input class="form-control" type="text" id="postText" placeholder="Enter Post Text" />
                     </div>
                     <button type="button" id="addpost" class="btn btn-primary">Post</button>
                 </form>
             </div>
-            <div class="col-sm-7 col-sm-offset-1">
+            <div class="col-md-6">
                 <div class="posts"></div>
             </div>
         </div>
     </div>
+
     <script id="post-template" type="text/x-handlebars-template">
-        <div class="post" data-id="{{_id}}"> {{text}}
+        <div class="post" data-id="{{_id}}">
+            <h3>{{title}}
+                <span class="icons">
+                    <i class="far fa-edit edit-post-icon"></i>
+                    <i class="fas fa-trash-alt remove-post"></i>
+                </span>
+            </h3>
+            <h6 class="timeAndUser">
+                <span class="createdBy"> Created By: {{username}}</span>
+                <span class="time">at {{time}}</span>
+            </h6>
+            <p class="post-text">{{text}}</p>
+            <div class="edit-post-form">
+                <input class="form-control" type="text" id="edit-post-input"/>
+                <button type="button" id="editPostButton" class="btn btn-success btn-sm">Save Changes</button>
+                <button type="button" id="cancelEditPost" class="btn btn-outline-dark btn-sm">Cancel</button>
+            </div>
             <a class="toggle-comments" href="#"> Comments </a>
-            <i class="fas fa-trash-alt remove-post"></i>
-            <!-- <button type="button" class="btn btn-danger remove-post">Remove Post</button> -->
-            <!-- <div>111</div> -->
             <div class="comments-container">
                 <ul class="comments-list"></ul>
                 <input class="form-control name" type="text" placeholder="Name" />
@@ -44,13 +60,16 @@
         </div>
     </script>
     <script id="comment-template" type="text/x-handlebars-template">
-        <li class="comment" data-id="{{_id}}">{{text}} - {{user}}
-                <i class="fas fa-trash-alt remove-comment"></i>
-            <!-- <button type="button" class="btn btn-sm btn-danger remove-comment">Remove Comment</button> -->
+        <li class="comment" data-id="{{_id}}">
+            <span class="commentUser">{{user}} - </span>
+            {{text}}
+            <i class="far fa-edit edit-comment"></i>
+            <i class="fas fa-trash-alt remove-comment"></i>
         </li>
     </script>
     <script src="jquery/dist/jquery.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
+    <script type="text/javascript" src="datejs/src/core/parser.js"></script>
     <script src="main.js" type="module"></script>
 </body>
 

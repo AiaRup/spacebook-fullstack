@@ -9,7 +9,10 @@ let commentSchema = new mongoose.Schema({
 });
 
 let postSchema = new mongoose.Schema({
+  title: String,
   text: String,
+  username: String,
+  time: String,
   comments: [commentSchema]
 });
 

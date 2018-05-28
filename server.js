@@ -32,7 +32,10 @@ app.get('/posts', (req, res) => {
 // 2) to handle adding a post
 app.post('/posts', (req, res) => {
   Post.create({
+    title: req.body.title,
     text: req.body.text,
+    username: req.body.username,
+    time: req.body.time,
     comments: []
   }, (err, postResult) => {
     if (err) throw err;
