@@ -62,9 +62,14 @@
     <script id="comment-template" type="text/x-handlebars-template">
         <li class="comment" data-id="{{_id}}">
             <span class="commentUser">{{user}} - </span>
-            {{text}}
-            <i class="far fa-edit edit-comment"></i>
+            <span class="commentText">{{text}}</span>
+            <i class="far fa-edit edit-comment-icon"></i>
             <i class="fas fa-trash-alt remove-comment"></i>
+            <div class="edit-comment-form">
+                    <input class="form-control" type="text" id="edit-comment-input"/>
+                    <button type="button" id="editCommentButton" class="btn btn-success btn-sm">Save Changes</button>
+                    <button type="button" id="cancelEditComment" class="btn btn-outline-dark btn-sm">Cancel</button>
+                </div>
         </li>
     </script>
     <script src="jquery/dist/jquery.js"></script>

@@ -82,11 +82,39 @@ app.delete('/posts/:postId/comments/:commentId', (req, res) => {
   // delete the comment from the DB collection
   Post.findByIdAndUpdate(postId, { $pull: { comments: { _id: commentId } } }, { new: true }, (err, updatedPost) => {
     if (err) throw err;
+    res.send(updatedPost);
+  });
+});
+
+// 6) to handle updating a post
+app.put('/posts/:postId', (req, res) => {
+  var id = req.params.id;
+  // Check if the ID is a valid mongoose id
+  if (!ObjectID.isValid(id)) {
+    return res.status(400).send('Id not in the correct format');
+  }
+  // update the post in the DB collection
+  Post.findByIdAndUpdate(id, { $set: { text: req.body.text } }, { new: true }, (err, updatedPost) => {
+    if (err) throw err;
     console.log(updatedPost);
     res.json(updatedPost);
   });
 });
 
+// 7) to handle updating a comment
+app.put('/posts/:postId/comments/:commentId', (req, res) => {
+  let postId = req.params.postId;
+  let commentId = req.params.commentId;
+  // Check if the ID is a valid mongoose id
+  if (!ObjectID.isValid(postId) && !ObjectID.isValid(commentId)) {
+    return res.status(400).send('Id not in the correct format');
+  }
+  // updtae the comment from the DB collection
+  Post.update({ _id: postId, 'comments._id': commentId }, { $set: { 'comments.$.text': req.body.text } }, { new: true }, (err, updatedPost) => {
+    if (err) throw err;
+    res.json(updatedPost);
+  });
+});
 
 //PORT
 const SERVER_PORT = process.env.PORT || 8080;

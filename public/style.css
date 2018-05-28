@@ -86,7 +86,8 @@ input {
     font-family: 'Courgette', cursive;
 }
 
-.edit-post-form {
+.edit-post-form,
+.edit-comment-form {
     display: none;
 }
 
@@ -114,7 +115,7 @@ li.comment {
 }
 
 .comment .remove-comment,
-.comment .edit-comment {
+.comment .edit-comment-icon {
     color: #160d69;
     font-size: 15px;
     margin-left: 20px;
