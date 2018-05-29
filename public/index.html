@@ -26,11 +26,14 @@
                     <button type="button" id="addpost" class="btn btn-primary">Post</button>
                 </form>
             </div>
+            <!-- </div> col-md-4 -->
             <div class="col-md-6">
                 <div class="posts"></div>
             </div>
         </div>
+        <!-- </div> row -->
     </div>
+    <!-- </div> container -->
 
     <script id="post-template" type="text/x-handlebars-template">
         <div class="post" data-id="{{_id}}">
@@ -46,7 +49,7 @@
             </h6>
             <p class="post-text">{{text}}</p>
             <div class="edit-post-form">
-                <input class="form-control" type="text" id="edit-post-input"/>
+                <input class="form-control" type="text" id="edit-post-input" />
                 <button type="button" id="editPostButton" class="btn btn-success btn-sm">Save Changes</button>
                 <button type="button" id="cancelEditPost" class="btn btn-outline-dark btn-sm">Cancel</button>
             </div>
@@ -59,14 +62,21 @@
             </div>
         </div>
     </script>
+
     <script id="comment-template" type="text/x-handlebars-template">
         <li class="comment" data-id="{{_id}}">
             <span class="commentUser">{{user}} - </span>
-            {{text}}
-            <i class="far fa-edit edit-comment"></i>
+            <span class="commentText">{{text}}</span>
+            <i class="far fa-edit edit-comment-icon"></i>
             <i class="fas fa-trash-alt remove-comment"></i>
+            <div class="edit-comment-form">
+                <input class="form-control" type="text" id="edit-comment-input" />
+                <button type="button" id="editCommentButton" class="btn btn-success btn-sm">Save Changes</button>
+                <button type="button" id="cancelEditComment" class="btn btn-outline-dark btn-sm">Cancel</button>
+            </div>
         </li>
     </script>
+
     <script src="jquery/dist/jquery.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
     <script type="text/javascript" src="datejs/src/core/parser.js"></script>

@@ -11,8 +11,11 @@ eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
-eventsHandler.registerUpdatePost();
+eventsHandler.registerToggleUpdatePost();
+eventsHandler.registerToggleUpdateComment();
 eventsHandler.registerCancelUpdates();
+eventsHandler.registerUpdatePostText();
+eventsHandler.registerUpdateCommentText();
 
 // request all the posts from the DB
 let getAllPosts = function() {

@@ -73,8 +73,13 @@ input {
     color: #160d69;
 }
 
-.post .icons, .post .time {
+.post .icons,
+.post .time {
     margin-left: auto;
+}
+
+.post .time {
+    font-family: 'Courgette', cursive;
 }
 
 .post .timeAndUser {
@@ -86,7 +91,8 @@ input {
     font-family: 'Courgette', cursive;
 }
 
-.edit-post-form {
+.edit-post-form,
+.edit-comment-form {
     display: none;
 }
 
@@ -111,10 +117,15 @@ li.comment {
 
 .toggle-comments {
     display: block;
+    color: #fffaf0;
+}
+
+.toggle-comments:hover {
+    color: #fffaf0;
 }
 
 .comment .remove-comment,
-.comment .edit-comment {
+.comment .edit-comment-icon {
     color: #160d69;
     font-size: 15px;
     margin-left: 20px;

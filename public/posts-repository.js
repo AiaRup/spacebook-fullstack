@@ -35,7 +35,25 @@ class PostsRepository {
       url: `posts/${postId}`,
       success: () => {
         this.posts.splice(index, 1);
-        console.log('post deleted from array');
+        console.log('post deleted from local array');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  }
+
+  updatePost(index, postText) {
+    let postId = this.posts[index]._id;
+    return $.ajax({
+      method: 'PUT',
+      url: `posts/${postId}`,
+      data: {
+        text: postText
+      },
+      success: (updatedPost) => {
+        this.posts[index].text = postText;
+        console.log('post in local array updated');
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -68,6 +86,24 @@ class PostsRepository {
       url: `posts/${postId}/comments/${commentId}`,
       success: () => {
         this.posts[postIndex].comments.splice(commentIndex, 1);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  }
+
+  updateComment(postIndex, commentIndex, commentText) {
+    let postId = this.posts[postIndex]._id;
+    let commentId = this.posts[postIndex].comments[commentIndex]._id;
+    return $.ajax({
+      method: 'PUT',
+      url: `posts/${postId}/comments/${commentId}`,
+      data: {
+        text: commentText
+      },
+      success: () => {
+        this.posts[postIndex].comments[commentIndex].text = commentText;
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
