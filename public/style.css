@@ -73,8 +73,13 @@ input {
     color: #160d69;
 }
 
-.post .icons, .post .time {
+.post .icons,
+.post .time {
     margin-left: auto;
+}
+
+.post .time {
+    font-family: 'Courgette', cursive;
 }
 
 .post .timeAndUser {
@@ -112,6 +117,11 @@ li.comment {
 
 .toggle-comments {
     display: block;
+    color: #fffaf0;
+}
+
+.toggle-comments:hover {
+    color: #fffaf0;
 }
 
 .comment .remove-comment,

@@ -88,7 +88,7 @@ app.delete('/posts/:postId/comments/:commentId', (req, res) => {
 
 // 6) to handle updating a post
 app.put('/posts/:postId', (req, res) => {
-  var id = req.params.id;
+  var id = req.params.postId;
   // Check if the ID is a valid mongoose id
   if (!ObjectID.isValid(id)) {
     return res.status(400).send('Id not in the correct format');

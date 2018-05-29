@@ -146,5 +146,4 @@ class EventsHandler {
 
 }
 
-
 export default EventsHandler;

@@ -35,7 +35,7 @@ class PostsRepository {
       url: `posts/${postId}`,
       success: () => {
         this.posts.splice(index, 1);
-        console.log('post deleted from array');
+        console.log('post deleted from local array');
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
@@ -53,7 +53,7 @@ class PostsRepository {
       },
       success: (updatedPost) => {
         this.posts[index].text = postText;
-        console.log('post in array updated');
+        console.log('post in local array updated');
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
