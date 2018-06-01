@@ -6,6 +6,21 @@ class PostsRepository {
     this.posts = [];
   }
 
+  // request all the posts from the DB
+  getAllPosts() {
+    return $.ajax({
+      method: 'Get',
+      url: 'posts',
+      success: (posts) => {
+      // add the posts and comments to the array
+        this.posts = posts;
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      }
+    });
+  }
+
   addPost(postText, postTitle, postUser) {
     let postTime = new Date();
     postTime = postTime.toLocaleTimeString().substring(0, 5) + ' on ' + postTime.toLocaleDateString().replace(/\./g, '/');

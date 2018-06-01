@@ -70,7 +70,6 @@ class EventsHandler {
 
   registerRemoveComment() {
     this.$posts.on('click', '.remove-comment', (event) => {
-      // let $commentsList = $(event.currentTarget).closest('.post').find('.comments-list');
       let postIndex = $(event.currentTarget).closest('.post').index();
       let commentIndex = $(event.currentTarget).closest('.comment').index();
       this.postsRepository.deleteComment(postIndex, commentIndex).then(() => {

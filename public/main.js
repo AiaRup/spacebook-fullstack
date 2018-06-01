@@ -17,22 +17,10 @@ eventsHandler.registerCancelUpdates();
 eventsHandler.registerUpdatePostText();
 eventsHandler.registerUpdateCommentText();
 
-// request all the posts from the DB
-let getAllPosts = function() {
-  $.ajax({
-    method: 'Get',
-    url: 'posts',
-    success: function(posts) {
-      // add the posts and comments to the array
-      postsRepository.posts = posts;
-      // render all posts and comments on the page
-      postsRenderer.renderPosts(postsRepository.posts);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-};
-  // Get all posts as soon as the page loads
-getAllPosts();
+
+// Get all posts as soon as the page loads
+postsRepository.getAllPosts().then(() => {
+  // render all posts and comments on the page
+  postsRenderer.renderPosts(postsRepository.posts);
+});
 
