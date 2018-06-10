@@ -5,7 +5,8 @@ var ObjectID = require('mongodb').ObjectID;
 mongoose.Promise = global.Promise;
 
 // connect to DB and check the connection
-mongoose.connect(process.env.CONNECTION_STRING||'mongodb://localhost/spacebookDB', { useMongoClient: true })
+let myConnection = process.env.CONNECTION_STRING || 'mongodb://localhost/spacebookDB'
+mongoose.connect(myConnection, { useMongoClient: true })
   .then(() => {console.log('Successfully connected to mongoDB');})
   .catch((error) => console.error(error));
 
