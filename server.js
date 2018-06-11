@@ -10,6 +10,7 @@ mongoose.connect(myConnection, { useMongoClient: true })
   .then(() => {console.log('Successfully connected to mongoDB');})
   .catch((error) => console.error(error));
 
+
 var Post = require('./models/postModel');
 
 var app = express();
